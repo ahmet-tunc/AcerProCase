@@ -1,0 +1,44 @@
+AcerPro - Case
+
+İlgili case yapım aşamasında, Aytül Hanımın teknik görüşmede belirttiği şekilde, case dışına çıkarak bi tık fazlasını yaptım.
+
+
+> > > Proje anlatımı
+
+> Proje çalıştırıldığında, select inputunun içerisine, servisten dönen ülke isimleri basılacak. Ve kullanıcıya görüntülenen sayfada select inputu yer alacak.
+
+> Kullanıcı, select inputunda yapmış olduğu ülke seçimlerine göre, seçeceği ülkenin bilgilerini, select inputunun altında bulunan tabloda görebilecek.
+
+> Select ile seçilen ülke, alt tabloda listelendiğinde, select içerisinde ilgili seçenek disable olacak. 
+  Bu sayede kullanıcının tekrar tekrar aynı veriyi seçmesi engellenmiş olacak.
+
+> Listelenen ülke bilgilerini, ilgili tabloda sağ tarafta bulunan kırmızı buton aracılığıyla kaldırabilecek.
+
+> Kullanıcı, seçmiş olduğu ülke bilgilerini veritabanına kayıt yapmak isterse, tabloda sağ tarafta bulunan yeşil butona tıklayarak, ilgili işlemi gerçekleştirebilecek.
+
+> Veri kaydetme işlemi eğer başarılıysa, üst tabloda yer alan ülke bilgisi, alt tarafta bulunan "Veritabanına kaydedilmiş veriler" tablosuna düşecek.
+
+
+
+
+> > > Back-end tarafında yapılan ekstra işlemler
+
+> Migration
+
+> Caching (MemoryCache)
+
+> Transaction
+
+> Validation (FluentValidation)
+
+> Mapping (AutoMapper)
+
+> Global Exception Handling
+
+> IOC
+
+> Bu case projesinde gerek olmasa da, repository ve business katmanında generic bir yapı oluşturdum.
+
+
+(Veritabanı yolunu appsettings dosyası içerisinden değiştirip, veritabanını oluşturduktan sonra, migrate ederek ilgili tabloyu oluşturabilirsiniz.)
+

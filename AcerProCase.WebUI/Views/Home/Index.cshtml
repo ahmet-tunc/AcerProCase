@@ -1,0 +1,154 @@
+﻿@model AcerProCase.WebUI.Models.CountryViewModel
+
+@{
+    ViewData["Title"] = "Anasayfa";
+}
+
+
+<div class="country-info" id="CountryInfo">
+    <div>
+        <h1>AcerPro</h1>
+    </div>
+    <div>
+        <select class="country-list" id="CountryList" asp-items="@(Model.CountryList?.Select(x => new SelectListItem { Text  = x.Name , Value = x.ShortName}))">
+            <option selected value="0" disabled>Ülke seçiniz</option>
+        </select>
+    </div>
+
+    <div class="mt-3">
+        <table class="table table-hover country-info-tbl">
+            <thead>
+                <tr class="bg-dark text-white">
+                    <th scope="col">Ülke</th>
+                    <th scope="col">Ülke Başkent</th>
+                    <th scope="col">Ülke Kısaltması</th>
+                    <th scope="col">Ülke Para Birimi</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="CountryInfoBody">
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-3">
+        <table class="table table-hover db-country-info-tbl">
+            <thead>
+                <tr class="bg-success text-white">
+                    <th colspan="4">Veritabanına kaydedilmiş veri listesi</th>
+                </tr>
+                <tr class="bg-dark text-white">
+                    <th scope="col">Ülke</th>
+                    <th scope="col">Ülke Başkent</th>
+                    <th scope="col">Ülke Kısaltması</th>
+                    <th scope="col">Ülke Para Birimi</th>
+                </tr>
+            </thead>
+            <tbody id="DbCountryInfoBody">
+                @if (Model.DbCountryList != null)
+                {
+                    foreach (var country in Model.DbCountryList)
+                    {
+                        <tr>
+                            <td>@(country.Name)</td>
+                            <td>@(country.CapitalCity)</td>
+                            <td>@(country.ShortName)</td>
+                            <td>@(country.CountryCurrency)</td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+@section Styles{
+    <link href="~/lib/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/lib/sweetalert/sweetalert2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .country-info-tbl th {
+            width: 20%;
+        }
+
+        .db-country-info-tbl th {
+            width: 25%;
+        }
+
+
+        thead, tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        tbody {
+            display: block;
+            max-height: 250px;
+            overflow: auto;
+        }
+
+        .fa-solid:hover {
+            transform: scale(1.2);
+        }
+
+        .fa-solid {
+            transition: .6s;
+            padding: 5px;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .fa-trash {
+            background-color: red;
+        }
+
+        .fa-floppy-disk {
+            background-color: green;
+        }
+    </style>
+}
+
+@section Scripts{
+    <script src="~/lib/select2/select2.min.js"></script>
+    <script src="~/lib/sweetalert/sweetalert2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <script src="~/js/CountrySave.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.country-list').select2();
+            BodyScrollDown();
+            $("#CountryList").on("change", function () {
+                var data = $(this).select2('data')
+                $.ajax({
+                    url: "/Home/CountryInfo",
+                    method: "POST",
+                    async: true,
+                    data: {
+                        'Name': data[0].text,
+                        'ShortName': data[0].id
+                    },
+                    success: function (res) {
+                        $("#CountryInfoBody").append(res);
+                        $('#CountryList option:selected').attr("disabled", "disabled");
+                        BodyScrollDown();
+                    }
+                });
+            });
+
+
+
+
+            $("body").on("click", "i.fa-trash", function () {
+                var id = $(this).attr("data-id");
+                $(".tr-" + id).remove();
+                $("#CountryList option[value='" + id + "']").attr("disabled", false);
+            })
+
+        });
+    </script>
+}
+

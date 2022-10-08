@@ -1,0 +1,11 @@
+﻿@model AcerProCase.WebUI.Models.CountryInfoModel
+@{
+}
+
+<tr class="tr-@(Model.ShortName)">
+    <td scope="row">@(Model.Name)</td>
+    <td>@(Model.CapitalCity)</td>
+    <td>@(Model.ShortName)</td>
+    <td>@(Model.CountryCurrency)</td>
+    <td><i class="fa-solid fa-trash" data-id="@(Model.ShortName)" title="Sil"></i> <i class="fa-solid fa-floppy-disk" data-id="@(Model.ShortName)" title="Kaydet"></i></td>
+</tr>
